@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row text-center" >
+        <h3 class="mb-5 mt-3">Список доступних тестів з дисципліни "{{discName}}"</h3>
+    </div>
+    <div class="row text-center" >
+        <div class="col col-md-6 col-lg-4" *ngFor="let oneTest of testsList">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4 class="card-title">{{ oneTest.name }}</h4>
+                    <p class="card-text">{{ oneTest.description }}</p>
+                    <a [routerLink]="['/test-one', oneTest.id]" class="btn btn-primary" [ngClass]="getBtnClass(oneTest.type)">
+                        {{ getBtnText(oneTest.type) }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

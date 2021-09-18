@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col col-lg-6 offset-lg-3 text-center">
+            <h1>{{ testHeader.name }}</h1>
+            <h5>{{ testHeader.description }}</h5>
+            <h4>Номер спроби: {{ testHeader.try_number }}</h4>
+            <div *ngIf="testHeader.res_status == 1">
+                <div class="float-start">
+                    Тривалість {{ testTimePassed }}
+                </div>
+                <div class="float-end">
+                    Залишилось {{ testTimeLeft }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
