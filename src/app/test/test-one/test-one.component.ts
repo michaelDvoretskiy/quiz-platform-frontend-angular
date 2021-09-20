@@ -12,11 +12,13 @@ export class TestOneComponent implements OnInit {
 
   testHeader: any;
   testContent: any;
-  testAnswers: any;
+  testAnswers: any = {};
   testBeginDate: Date;
   testHasToBeFinished: Date;
   testTimePassed: String = '';
   testTimeLeft: String = '';
+  testPills: any[] = [];
+  currentQuestionIndex = 0;
 
   constructor(private testService: TestService,
               private authService: AuthService,
@@ -39,9 +41,10 @@ export class TestOneComponent implements OnInit {
           this.testHasToBeFinished.setMinutes(
               this.testHasToBeFinished.getMinutes() + data.test.duration
           );
-          if (data.answers) {
+          if (data.content.answers) {
             this.testAnswers = data.content.answers;
           }
+          this.initTestPills();
           setInterval(() => {
               this.refreshTimePassed();
               this.refreshTimeLift();
@@ -55,6 +58,31 @@ export class TestOneComponent implements OnInit {
           }
         }
     );
+  }
+
+  getPillClass(hasAnswer: boolean, isCurrent: boolean) {
+      if (isCurrent) {
+          let classTest = "bg-transparent border-2 border-solid";
+          if (hasAnswer) {
+              classTest += " text-primary border-primary";
+          } else {
+              classTest += " text-secondary border-secondary";
+          }
+          return classTest;
+      }
+      if (hasAnswer) {
+          return "bg-primary";
+      }
+      return "bg-secondary";
+  }
+
+  private initTestPills() {
+      for(let qNumb in this.testContent) {
+          this.testPills.push({
+              number: qNumb,
+              answer: this.testAnswers[qNumb] == undefined ? [] : this.testAnswers[qNumb]
+          });
+      }
   }
 
   private refreshTimePassed() {
@@ -79,5 +107,17 @@ export class TestOneComponent implements OnInit {
       let ms = m.toString(); if (ms.length < 2) ms = '0' + ms;
       let ss = s.toString(); if (ss.length < 2) ss = '0' + ss;
       return `${hs} год. ${ms} хв. ${ss} сек.`;
+  }
+
+  public changeCurrent(step: number) {
+      let current = this.currentQuestionIndex;
+      current += step;
+      if (current >= this.testPills.length) {
+          current = 0;
+      }
+      if (current < 0) {
+          current = this.testPills.length - 1;
+      }
+      this.currentQuestionIndex = current;
   }
 }
