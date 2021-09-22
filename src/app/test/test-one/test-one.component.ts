@@ -13,6 +13,7 @@ export class TestOneComponent implements OnInit {
   testHeader: any;
   testContent: any;
   testAnswers: any = {};
+  testAnswersRightFlags: any = {};
   testBeginDate: Date;
   testHasToBeFinished: Date;
   testTimePassed: String = '';
@@ -41,15 +42,19 @@ export class TestOneComponent implements OnInit {
           this.testHasToBeFinished.setMinutes(
               this.testHasToBeFinished.getMinutes() + data.test.duration
           );
+          if (this.testHeader.res_status == 2) {
+              this.testAnswersRightFlags = data.content.checked_answers;
+          }
           if (data.content.answers) {
             this.testAnswers = data.content.answers;
           }
           this.initTestPills();
-          setInterval(() => {
-              this.refreshTimePassed();
-              this.refreshTimeLift();
-          }, 1000);
-          console.log(data);
+          if (this.testHeader.res_status == 1) {
+              setInterval(() => {
+                  this.refreshTimePassed();
+                  this.refreshTimeLift();
+              }, 1000);
+          }
         },
         error => {
           if (error.status != undefined && error.status == '401') {
@@ -60,19 +65,36 @@ export class TestOneComponent implements OnInit {
     );
   }
 
-  getPillClass(hasAnswer: boolean, isCurrent: boolean) {
-      if (isCurrent) {
-          let classTest = "bg-transparent border-2 border-solid";
-          if (hasAnswer) {
-              classTest += " text-primary border-primary";
+  getPillClass(hasAnswer: boolean, isCurrent: boolean, isRight: boolean) {
+      if (this.testHeader.res_status == 2) {
+          if (isRight) {
+              if (isCurrent) {
+                  return "bg-transparent border-2 border-solid text-success border-success";
+              } else {
+                  return "bg-success";
+              }
           } else {
-              classTest += " text-secondary border-secondary";
+              if (isCurrent) {
+                  return "bg-transparent border-2 border-solid text-danger border-danger";
+              } else {
+                  return "bg-danger";
+              }
           }
-          return classTest;
+      } else {
+          if (isCurrent) {
+              let classTest = "bg-transparent border-2 border-solid";
+              if (hasAnswer) {
+                  classTest += " text-primary border-primary";
+              } else {
+                  classTest += " text-secondary border-secondary";
+              }
+              return classTest;
+          }
+          if (hasAnswer) {
+              return "bg-primary";
+          }
       }
-      if (hasAnswer) {
-          return "bg-primary";
-      }
+
       return "bg-secondary";
   }
 
@@ -119,5 +141,77 @@ export class TestOneComponent implements OnInit {
           current = this.testPills.length - 1;
       }
       this.currentQuestionIndex = current;
+  }
+
+  acceptAnswer(answer: any) {
+      const qNumber = this.testPills[this.currentQuestionIndex].number;
+      this.testPills[this.currentQuestionIndex].answer = answer;
+      this.testAnswers[qNumber] = answer;
+
+      const token = this.authService.getToken();
+      const testId = this.testHeader.id;
+      if (!token) {
+          this.router.navigate(['/login']);
+          return;
+      }
+      this.testService.setAnswers(token, testId, this.testAnswers).subscribe(
+          data => this.testAnswers = data.answers
+      );
+  }
+
+  canBeFinished(): boolean {
+      if (this.testHeader.res_status != 1) {
+          return false;
+      }
+      for(let i in this.testContent) {
+          if (!this.testAnswers[i]) {
+              return false;
+          }
+      }
+      return true;
+  }
+
+  finishTest() {
+    const token = this.authService.getToken();
+    const testId = this.testHeader.id;
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.testService.finishTest(token, testId).subscribe(
+        data => window.location.reload()
+    )
+  }
+
+  getFinishStatus() {
+      if (this.testHeader.finish_status == 1) {
+          return "Тест прострочено"
+      }
+      if (this.testHeader.finish_status == 2) {
+          return "Тест пройдено"
+      }
+      if (this.testHeader.finish_status == 3) {
+          return "Тест не пройдено"
+      }
+      return "";
+  }
+
+  annulTest() {
+      const token = this.authService.getToken();
+      const testId = this.testHeader.id;
+      if (!token) {
+          this.router.navigate(['/login']);
+          return;
+      }
+      this.testService.annulTest(token, testId).subscribe(
+          data => window.location.reload()
+      );
+  }
+
+  getStatusStyle(status: number) {
+      if (status == 2) {
+          return "border-2 border-solid border-success p-2 text-success"
+      }
+      return "border-2 border-solid border-danger p-2 text-danger";
   }
 }

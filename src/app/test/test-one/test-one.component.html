@@ -1,6 +1,6 @@
 <div class="container" *ngIf="testPills.length > 0">
     <div class="row">
-        <div class="col col-lg-6 offset-lg-3 text-center">
+        <div class="col col-lg-8 offset-lg-2 text-center">
             <h1>{{ testHeader.name }}</h1>
             <h5>{{ testHeader.description }}</h5>
             <h4>Номер спроби: {{ testHeader.try_number }}</h4>
@@ -12,11 +12,20 @@
                     Залишилось {{ testTimeLeft }}
                 </div>
             </div>
+            <div *ngIf="testHeader.res_status == 2">
+                <div class="float-start"
+                     [class]="getStatusStyle(this.testHeader.finish_status)">
+                    {{ getFinishStatus() }}
+                </div>
+                <div class="float-end">
+                    Результат {{ this.testHeader.result }} балів
+                </div>
+            </div>
             <div class="clearfix"></div>
             <div class="mt-3">
                 <ng-container *ngFor="let q of testPills, let i=index">
                 <span class="badge rounded-pill q-number-pill ms-3 me-3"
-                [class]="getPillClass(q.answer != 0, i == currentQuestionIndex)" (click)="currentQuestionIndex=i">
+                [class]="getPillClass(q.answer != 0, i == currentQuestionIndex, testAnswersRightFlags[q.number] == 1)" (click)="currentQuestionIndex=i">
                     {{q.number}}
                 </span>
                 </ng-container>
@@ -24,14 +33,16 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col col-lg6 offset-lg-3 text-sm-center">
+        <div class="col col-lg-6 offset-lg-3 text-sm-center">
             <app-question
                     [question]="testContent[testPills[currentQuestionIndex].number]"
-                    [answers]="testPills[currentQuestionIndex].answer"></app-question>
+                    [answers]="testPills[currentQuestionIndex].answer"
+                    [editable]="this.testHeader.res_status == 1"
+            (makeAnswer)="acceptAnswer($event)"></app-question>
         </div>
     </div>
     <div class="row mt-5">
-        <div class="col col-lg6 offset-lg-3 text-sm-center">
+        <div class="col col-lg-6 offset-lg-3 text-center">
             <div class="float-start">
                 <button type="button" class="btn btn-outline-secondary" (click)="changeCurrent(-1)">&lt;&lt;</button>
             </div>
@@ -39,6 +50,20 @@
                 <button type="button" class="btn btn-outline-secondary" (click)="changeCurrent(1)">&gt;&gt;</button>
             </div>
             <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="row mt-5" *ngIf="canBeFinished()">
+        <div class="col col-lg-6 offset-lg-3 text-center">
+            <button type="button" class="btn btn-primary" (click)="finishTest()">
+                Завершити тест
+            </button>
+        </div>
+    </div>
+    <div class="row mt-5" *ngIf="this.testHeader.res_status == 2">
+        <div class="col col-lg-6 offset-lg-3 text-center">
+            <button type="button" class="btn btn-danger" (click)="annulTest()">
+                Анулювати результат
+            </button>
         </div>
     </div>
 </div>

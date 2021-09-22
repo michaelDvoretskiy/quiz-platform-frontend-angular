@@ -30,4 +30,25 @@ export class TestService {
             `${environment.apiBaseUrl}test-one/read/${testId}/?token=${token}`
         );
     }
+
+    public setAnswers(token: string, testId: number, answers: any) {
+      return this.http.post<any>(
+          `${environment.apiBaseUrl}test-one/accept-answers/${testId}/?token=${token}`,
+          {answers: answers}
+      );
+    }
+
+    public finishTest(token: string, testId: number) {
+      return this.http.post<any>(
+        `${environment.apiBaseUrl}test-one/finish/${testId}/?token=${token}`,
+        {}
+      );
+    }
+
+    public annulTest(token: string, testId: number) {
+        return this.http.delete<any>(
+            `${environment.apiBaseUrl}test-one/annul/${testId}/?token=${token}`,
+            {}
+        );
+    }
 }
