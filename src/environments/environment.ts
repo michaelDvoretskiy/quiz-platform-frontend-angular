@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://edu-portal/tests/api/',
+  apiBaseUrl: 'http://edu-portal/app/api/',
   siteBackUrl: 'http://edu-portal'
 };
 

@@ -12,7 +12,7 @@ export class TestOneComponent implements OnInit {
 
   testHeader: any;
   testContent: any;
-  testAnswers: any = {};
+  testAnswers: any;
   testAnswersRightFlags: any = {};
   testBeginDate: Date;
   testHasToBeFinished: Date;
@@ -47,6 +47,8 @@ export class TestOneComponent implements OnInit {
           }
           if (data.content.answers) {
             this.testAnswers = data.content.answers;
+          } else {
+            this.testAnswers = {};
           }
           this.initTestPills();
           if (this.testHeader.res_status == 1) {
@@ -144,6 +146,10 @@ export class TestOneComponent implements OnInit {
   }
 
   acceptAnswer(answer: any) {
+      if (this.testAnswers == undefined) {
+          this.testAnswers = {};
+      }
+
       const qNumber = this.testPills[this.currentQuestionIndex].number;
       this.testPills[this.currentQuestionIndex].answer = answer;
       this.testAnswers[qNumber] = answer;

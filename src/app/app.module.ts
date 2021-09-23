@@ -9,6 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { DiscListComponent } from './test/disc-list/disc-list.component';
 import {TestModule} from "./test/test.module";
+import {LogoutComponent} from "./auth/logout/logout.component";
 
 @NgModule({
   declarations: [

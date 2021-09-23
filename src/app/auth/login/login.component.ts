@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     ).subscribe(
         data => {
           this.authService.saveToken(data);
-          this.router.navigate(['/disc-list']);
+          this.router.navigate(['/']);
         },
         error => {
           this.authService.clearToken();

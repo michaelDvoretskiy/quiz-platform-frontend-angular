@@ -20,20 +20,35 @@ export class AuthService {
   public saveToken(data: any) {
       if (data.token != undefined && data.token != null) {
           this.setToken(data.token);
+          this.setAppUserName(data);
       } else {
           this.clearToken();
       }
   }
 
   public getToken() {
-      return localStorage.getItem('token');
+      return localStorage.getItem('app_user_token');
   }
 
   public setToken(token: string) {
-      localStorage.setItem('token', token);
+      localStorage.setItem('app_user_token', token);
   }
 
-  public clearToken() {
-      localStorage.removeItem('token');
+  public setAppUserName(data: any) {
+      const name = data.name == '' ? data.username : data.name;
+      localStorage.setItem('app_user_name', name);
+  }
+
+    public getAppUserName(): String {
+        const name = localStorage.getItem('app_user_name');
+        if (!name) {
+            return '';
+        }
+        return name;
+    }
+
+    public clearToken() {
+      localStorage.removeItem('app_user_token');
+      localStorage.removeItem('app_user_name');
   }
 }

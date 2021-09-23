@@ -60,7 +60,7 @@ export class TestListComponent implements OnInit {
       return 'btn-success';
     }
     if (type == 2) {
-      return 'btn-info';
+      return 'btn-secondary';
     }
     return "btn-info";
   }

@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="row" >
+        <div class="float-start mt-1">
+            <a [routerLink]="['/disc-list']" class="btn btn-outline-secondary btn-sm">
+                Повернутись до списку дисциплін
+            </a>
+        </div>
+    </div>
     <div class="row text-center" >
         <h3 class="mb-5 mt-3">Список доступних тестів з дисципліни "{{discName}}"</h3>
     </div>
@@ -8,9 +15,16 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ oneTest.name }}</h4>
                     <p class="card-text">{{ oneTest.description }}</p>
-                    <a [routerLink]="['/test-one', oneTest.id]" class="btn btn-primary" [ngClass]="getBtnClass(oneTest.type)">
-                        {{ getBtnText(oneTest.type) }}
+                    <a [routerLink]="['/test-one', oneTest.id]" class="btn btn-primary"
+                       [ngClass]="getBtnClass(oneTest.res_status)">
+                        {{ getBtnText(oneTest.res_status) }}
                     </a>
+                    <span *ngIf="oneTest.res_status == 2"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
+                        [class.bg-danger]="oneTest.result == 0" [class.bg-success]="oneTest.result != 0">
+                        {{ oneTest.result }}
+                        <span class="visually-hidden">points</span>
+                    </span>
                 </div>
             </div>
         </div>

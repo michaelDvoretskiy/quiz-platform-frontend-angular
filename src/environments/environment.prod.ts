@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiBaseUrl: 'http://edu-portal/app/api/',
+  siteBackUrl: 'http://edu-portal'
 };
