@@ -46,7 +46,7 @@ export class TestService {
     }
 
     public annulTest(token: string, testId: number) {
-        return this.http.delete<any>(
+        return this.http.post<any>(
             `${environment.apiBaseUrl}test-one/annul/${testId}/?token=${token}`,
             {}
         );

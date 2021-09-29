@@ -10,6 +10,7 @@ import {FormsModule} from "@angular/forms";
 import { DiscListComponent } from './test/disc-list/disc-list.component';
 import {TestModule} from "./test/test.module";
 import {LogoutComponent} from "./auth/logout/logout.component";
+import {AttendingModule} from "./attending/attending.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {LogoutComponent} from "./auth/logout/logout.component";
     FormsModule,
     AuthModule,
     TestModule,
+    AttendingModule,
     HttpClientModule,
 
   ],

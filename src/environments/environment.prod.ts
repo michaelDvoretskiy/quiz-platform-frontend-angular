@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://edu-portal/app/api/',
-  siteBackUrl: 'http://edu-portal'
+  apiBaseUrl: 'http://dvm.ho.ua/app/api/',
+  siteBackUrl: 'http://dvm.ho.ua'
 };
