@@ -1,1 +1,20 @@
-<p>Даний функціонал знаходиться на етапі розробки</p>
+<div *ngIf="currentPair">
+    <h3>Поточна пара</h3>
+    <div class="card">
+        <img [src]="currentPair.thumb" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title">{{ currentPair.post_title }}</h5>
+            <p class="card-text">({{ currentPair.description }})</p>
+            <p class="card-text p-2" [class]="getStatusClasses(currentPair.status)">
+                {{ getStatusText(currentPair.status) }}
+            </p>
+            <button *ngIf="currentPair.status == 0" class="btn btn-primary"
+                    (click)="indicateAttending(currentPair.id)">
+                Присутній
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="!currentPair">
+    <h5 class="text-info">На даний момент поточне заняття відсутнє</h5>
+</div>
