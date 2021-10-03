@@ -16,6 +16,21 @@
                     <img [src]="disc.thumb" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">{{ disc.post_title }}</h5>
+                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#pairsAttending" aria-expanded="false"
+                                aria-controls="pairsAttending">
+                            Журнал
+                        </button>
+                    </div>
+                    <div class="collapse" id="pairsAttending">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-start" *ngFor="let pair of disc.pairs">
+                            {{ pair.description }}
+                            <p [class]="getStatusClass(pair.status)">
+                                ( {{ getStatusText(pair.status) }} )
+                            </p>
+                        </li>
+                    </ul>
                     </div>
                 </div>
             </div>

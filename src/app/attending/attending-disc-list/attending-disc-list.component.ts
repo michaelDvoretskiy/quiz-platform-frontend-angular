@@ -34,4 +34,30 @@ export class AttendingDiscListComponent implements OnInit {
       );
   }
 
+  getStatusText(type: number): String {
+        if (type == 2) {
+            return 'Пару відвідано';
+        }
+        if (type == 1) {
+            return 'Присутність не підтверджено';
+        }
+        if (type == 0) {
+            return 'Не відвідано';
+        }
+        return "";
+  }
+
+  getStatusClass(type: number): String {
+        if (type == 1) {
+            return 'text-info';
+        }
+        if (type == 2) {
+            return 'text-success';
+        }
+        if (type == 0) {
+            return 'text-danger';
+        }
+        return "";
+  }
+
 }
