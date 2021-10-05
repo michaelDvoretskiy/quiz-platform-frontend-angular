@@ -9,6 +9,8 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
+  isAdmin = false;
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -17,6 +19,7 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    this.isAdmin = this.authService.isAdmin();
   }
 
 }

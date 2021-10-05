@@ -4,8 +4,11 @@
         <a [routerLink]="['/disc-list']" class="btn btn-success mt-5 p-3">
             Тестування
         </a>
-        <a [routerLink]="['/attending/disc-list']" class="btn btn-dark mt-5 p-3">
+        <a *ngIf="!isAdmin" [routerLink]="['/attending/disc-list']" class="btn btn-dark mt-5 p-3">
             Відвідування занять
+        </a>
+        <a *ngIf="isAdmin" [routerLink]="['/attending/disc-adm']" class="btn btn-dark mt-5 p-3">
+            Журнали
         </a>
     </div>
 </div>

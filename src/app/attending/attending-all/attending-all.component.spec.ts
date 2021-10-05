@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AttendingDiscComponent } from './attending-disc.component';
+import { AttendingAllComponent } from './attending-disc.component';
 
 describe('AttendingDiscComponent', () => {
-  let component: AttendingDiscComponent;
-  let fixture: ComponentFixture<AttendingDiscComponent>;
+  let component: AttendingAllComponent;
+  let fixture: ComponentFixture<AttendingAllComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AttendingDiscComponent ]
+      declarations: [ AttendingAllComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AttendingDiscComponent);
+    fixture = TestBed.createComponent(AttendingAllComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

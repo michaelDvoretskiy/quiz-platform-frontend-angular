@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+        <div class="row text-center">
+            <div class="col col-md-10 col-lg-6 offset-lg-3 offset-md-1">
+                <app-attending-current-admin></app-attending-current-admin>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 text-center">
+        <h2>Журнали відвідування занять</h2>
+    </div>
+    <div class="row">
+        <div class="row text-center">
+            <div class="col col-lg-6" *ngFor="let disc of discList">
+                <div class="card">
+                    <img [src]="disc.thumb" class="card-img-top disc-thumb" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ disc.post_title }}</h5>
+                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#pairsAttending'+disc.disc_id" aria-expanded="false"
+                                [attr.aria-controls]="'pairsAttending'+disc.disc_id">
+                            Журнал
+                        </button>
+                    </div>
+                    <div class="collapse" [id]="'pairsAttending'+disc.disc_id">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-start" *ngFor="let student of disc.students">
+                                <div class="row">
+                                    <div class="col-9">
+                                        {{ student.sname }} ( {{ student.attended_pairs }}/{{ student.all_pairs }} )
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <button class="btn btn-outline-info btn-sm" type="button" data-bs-toggle="collapse"
+                                                [attr.data-bs-target]="'#pairsAttending'+disc.disc_id+'_'+student.sid" aria-expanded="false"
+                                                [attr.aria-controls]="'pairsAttending'+disc.disc_id+'_'+student.sid">
+                                            ?
+                                        </button>
+                                    </div>
+                                    <div class="collapse" [id]="'pairsAttending'+disc.disc_id+'_'+student.sid">
+                                        <div class="card mt-3">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item text-start" *ngFor="let pair of student.pairs">
+                                                    {{ pair.description }}
+                                                    <p [class]="getStatusClass(pair.status)">
+                                                        ( {{ getStatusText(pair.status) }} )
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

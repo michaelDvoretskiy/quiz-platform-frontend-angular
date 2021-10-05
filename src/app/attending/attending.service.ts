@@ -37,4 +37,29 @@ export class AttendingService {
       return elem;
     })));
   }
+
+  public getAllAttendings(token: string): Observable<any> {
+    return this.http.get<any[]>(
+        `${environment.apiBaseUrl}attending-admin/list/?token=${token}`
+    ).pipe(map(data => data.map(elem => {
+      elem.thumb = environment.siteBackUrl + elem.thumb;
+      return elem;
+    })));
+  }
+
+  public getAllCurrentAttendings(token: string): Observable<any> {
+    return this.http.get<any[]>(
+        `${environment.apiBaseUrl}attending-admin/current/?token=${token}`
+    ).pipe(map(data => data.map(elem => {
+      elem.thumb = environment.siteBackUrl + elem.thumb;
+      return elem;
+    })));
+  }
+
+  public approveAttending(token: string, operationType: number, pairId: number, studentId: number) {
+    return this.http.post<any[]>(
+        `${environment.apiBaseUrl}attending-admin/approve/${pairId}/${studentId}?token=${token}`,
+        {type: operationType}
+    );
+  }
 }

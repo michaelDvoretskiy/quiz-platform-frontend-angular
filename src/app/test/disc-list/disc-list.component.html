@@ -5,7 +5,7 @@
     <div class="row text-center" >
         <div class="col col-md-6 col-lg-4" *ngFor="let disc of discList">
             <div class="card" (click)="openTestList(disc.id)">
-                <img [src]="disc.thumb" class="card-img-top" alt="">
+                <img [src]="disc.thumb" class="card-img-top disc-thumb text-center" alt="">
                 <div class="card-body">
                     <h5 class="card-title">{{disc.title}}</h5>
                 </div>

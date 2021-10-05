@@ -5,15 +5,17 @@ import {CommonModule} from "@angular/common";
 import {AuthModule} from "../auth/auth.module";
 import { AttendingRootComponent } from './attending-root/attending-root.component';
 import { AttendingDiscListComponent } from './attending-disc-list/attending-disc-list.component';
-import { AttendingDiscComponent } from './attending-disc/attending-disc.component';
+import { AttendingAllComponent } from './attending-all/attending-all.component';
 import { AttendingCurrentComponent } from './attending-current/attending-current.component';
+import { AttendingCurrentAdminComponent } from './attending-current-admin/attending-current-admin.component';
 
 @NgModule({
   declarations: [
     AttendingRootComponent,
     AttendingDiscListComponent,
-    AttendingDiscComponent,
-    AttendingCurrentComponent
+    AttendingAllComponent,
+    AttendingCurrentComponent,
+    AttendingCurrentAdminComponent
   ],
   imports: [
     AttendingRoutingModule,

@@ -44,6 +44,9 @@ export class AttendingDiscListComponent implements OnInit {
         if (type == 0) {
             return 'Не відвідано';
         }
+        if (type == 3) {
+            return 'Відхилено';
+        }
         return "";
   }
 
@@ -55,8 +58,11 @@ export class AttendingDiscListComponent implements OnInit {
             return 'text-success';
         }
         if (type == 0) {
-            return 'text-danger';
+            return 'text-secondary';
         }
+      if (type == 3) {
+          return 'text-danger';
+      }
         return "";
   }
 

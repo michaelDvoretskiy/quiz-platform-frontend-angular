@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-attending-root',
@@ -11,5 +12,4 @@ export class AttendingRootComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

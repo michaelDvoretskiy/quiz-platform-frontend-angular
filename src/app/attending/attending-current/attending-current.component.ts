@@ -64,6 +64,9 @@ export class AttendingCurrentComponent implements OnInit {
     if (status == 2) {
       return "Присутність на парі підтверджено";
     }
+    if (status == 3) {
+      return "Відмітку про присутність відхилено";
+    }
     return "";
   }
 
@@ -76,6 +79,9 @@ export class AttendingCurrentComponent implements OnInit {
     }
     if (status == 2) {
       return "bg-success text-white";
+    }
+    if (status == 3) {
+      return "bg-danger text-white";
     }
     return "";
   }

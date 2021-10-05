@@ -21,9 +21,28 @@ export class AuthService {
       if (data.token != undefined && data.token != null) {
           this.setToken(data.token);
           this.setAppUserName(data);
+          if (data.roles && data.roles.length > 0) {
+              this.setRoles(data.roles);
+          }
       } else {
           this.clearToken();
       }
+  }
+
+  public isAdmin() {
+      const rolesStr = localStorage.getItem('app_user_roles');
+      if (!rolesStr) {
+          return false;
+      }
+      const roles = JSON.parse(rolesStr);
+      if (roles.indexOf(1) != -1) {
+          return true;
+      }
+      return false;
+  }
+
+  public setRoles(roles: any[]) {
+      localStorage.setItem('app_user_roles', JSON.stringify(roles));
   }
 
   public getToken() {
@@ -39,16 +58,17 @@ export class AuthService {
       localStorage.setItem('app_user_name', name);
   }
 
-    public getAppUserName(): String {
-        const name = localStorage.getItem('app_user_name');
-        if (!name) {
-            return '';
-        }
-        return name;
-    }
+  public getAppUserName(): String {
+      const name = localStorage.getItem('app_user_name');
+      if (!name) {
+        return '';
+      }
+      return name;
+  }
 
-    public clearToken() {
+  public clearToken() {
       localStorage.removeItem('app_user_token');
       localStorage.removeItem('app_user_name');
+      localStorage.removeItem('app_user_roles');
   }
 }

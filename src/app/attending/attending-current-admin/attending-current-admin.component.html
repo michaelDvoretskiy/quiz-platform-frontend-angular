@@ -1,0 +1,36 @@
+<div *ngIf="currentPairs">
+    <h3>Поточна пара</h3>
+    <div class="card" *ngFor="let currentPair of currentPairs">
+        <img [src]="currentPair.thumb" class="card-img-top disc-thumb" alt="">
+        <div class="card-body">
+            <h5 class="card-title">{{ currentPair.post_title }}</h5>
+            <p class="card-text">({{ currentPair.description }})</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-start" *ngFor="let student of currentPair.students">
+                    <div class="row">
+                        <div class="col-8">
+                            {{ student.student }} <span [class]="getStatusClass(student.status)">
+                            ( {{ getStatusText(student.status) }} )
+                            </span>
+                        </div>
+                        <div class="col-4 text-center">
+                            <button *ngIf="student.status != 2"
+                                    (click)="approveAttending(student.pid, student.sid)"
+                                    class="btn btn-outline-success btn-sm me-2" type="button">
+                                Так
+                            </button>
+                            <button *ngIf="student.status == 1 || student.status == 2" class="btn btn-outline-danger btn-sm"
+                                    (click)="declineAttending(student.pid, student.sid)"
+                                    type="button">
+                                Ні
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div *ngIf="!currentPairs">
+    <h5 class="text-info">На даний момент поточне заняття відсутнє</h5>
+</div>
